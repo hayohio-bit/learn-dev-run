@@ -1,1 +1,0 @@
-# superS.H.Y-
