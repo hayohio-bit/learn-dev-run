@@ -22,42 +22,67 @@ const posts = (await getCollection("blog")).sort((a, b) => {
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body
-    class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased flex flex-col min-h-screen transition-colors"
-  >
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <Header />
     <main
-      class="w-full max-w-6xl mx-auto px-4 py-12 flex-grow flex flex-col md:flex-row gap-8"
+      class="w-full max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row gap-8"
     >
       <CategorySidebar />
+
       <section class="flex-1">
-        <ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="mb-8">
+          <h1 class="text-2xl font-bold mb-1">All Posts</h1>
+          <p class="text-sm text-gray-500 dark:text-gray-400">
+            {posts.length}개의 아티클
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {
             posts.map((post) => (
-              <li class="group">
-                <a href={`/blog/${post.id}/`} class="block no-underline">
-                  <div class="mb-4 overflow-hidden rounded-xl shadow-sm group-hover:shadow-md transition-shadow">
-                    {post.data.heroImage && (
+              <article>
+                <a href={`/blog/${post.id}/`} class="group block no-underline">
+                  {/* Image */}
+                  {post.data.heroImage && (
+                    <div class="mb-4 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
                       <Image
-                        width={720}
-                        height={720}
+                        width={400}
+                        height={225}
                         src={post.data.heroImage}
                         alt=""
-                        class="w-full aspect-square object-cover transform group-hover:scale-105 transition-transform duration-300"
+                        class="w-full aspect-video object-cover group-hover:scale-105 transition-transform duration-300"
                       />
-                    )}
-                  </div>
-                  <h4 class="text-2xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-2">
+                    </div>
+                  )}
+
+                  {/* Category */}
+                  {post.data.category && (
+                    <div class="mb-2">
+                      <span class="text-xs font-medium text-blue-600 dark:text-blue-400">
+                        {post.data.category}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Title */}
+                  <h2 class="text-base font-bold text-gray-900 dark:text-gray-100 mb-2 line-clamp-2 leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {post.data.title}
-                  </h4>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">
-                    <FormattedDate date={post.data.pubDate} />
+                  </h2>
+
+                  {/* Description */}
+                  <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 leading-relaxed mb-3">
+                    {post.data.description}
                   </p>
+
+                  {/* Date */}
+                  <div class="text-xs text-gray-500 dark:text-gray-500">
+                    <FormattedDate date={post.data.pubDate} />
+                  </div>
                 </a>
-              </li>
+              </article>
             ))
           }
-        </ul>
+        </div>
       </section>
     </main>
     <Footer />

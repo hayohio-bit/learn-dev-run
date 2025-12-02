@@ -1,46 +1,357 @@
 ---
 import { SITE_TITLE } from "../consts";
+
+// Determine if we're on the homepage
+const isHomePage = Astro.url.pathname === "/" || Astro.url.pathname === "";
 ---
 
 <header
-  class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800"
+  id="main-header"
+  class="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm transition-all duration-300"
 >
-  <nav class="max-w-4xl mx-auto px-4 py-4">
+  <nav class="max-w-6xl mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
-      <a href="/" class="text-2xl font-bold text-gray-900 dark:text-white">
+      <!-- Logo/Brand -->
+      <a
+        href="/"
+        class="text-2xl font-bold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors no-underline"
+      >
         {SITE_TITLE}
       </a>
 
-      <div class="flex items-center gap-6">
-        <a href="/" class="hover:text-blue-500 transition">홈</a>
-        <a href="/blog" class="hover:text-blue-500 transition">블로그</a>
-        <a href="/about" class="hover:text-blue-500 transition">소개</a>
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-6">
+        {
+          isHomePage ? (
+            <>
+              <a
+                href="#home"
+                class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors no-underline"
+                data-section="home"
+              >
+                홈
+              </a>
+              <a
+                href="#about"
+                class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors no-underline"
+                data-section="about"
+              >
+                소개
+              </a>
+              <a
+                href="#blog"
+                class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors no-underline"
+                data-section="blog"
+              >
+                블로그
+              </a>
+              <a
+                href="#contact"
+                class="nav-link text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors no-underline"
+                data-section="contact"
+              >
+                연락
+              </a>
+            </>
+          ) : (
+            <>
+              <a
+                href="/"
+                class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors no-underline"
+              >
+                홈
+              </a>
+              <a
+                href="/blog"
+                class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors no-underline"
+              >
+                블로그
+              </a>
+              <a
+                href="/about"
+                class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors no-underline"
+              >
+                소개
+              </a>
+            </>
+          )
+        }
         <button
           id="theme-toggle"
-          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
           aria-label="Toggle Dark Mode"
         >
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+          <svg
+            id="theme-icon-sun"
+            class="w-5 h-5 hidden dark:block"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              clip-rule="evenodd"></path>
+          </svg>
+          <svg
+            id="theme-icon-moon"
+            class="w-5 h-5 block dark:hidden"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
             <path
               d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
             ></path>
           </svg>
         </button>
       </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex md:hidden items-center gap-2">
+        <button
+          id="theme-toggle-mobile"
+          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200"
+          aria-label="Toggle Dark Mode"
+        >
+          <svg
+            class="w-5 h-5 hidden dark:block"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              clip-rule="evenodd"></path>
+          </svg>
+          <svg
+            class="w-5 h-5 block dark:hidden"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
+            ></path>
+          </svg>
+        </button>
+        <button
+          id="mobile-menu-button"
+          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          aria-label="Toggle Menu"
+        >
+          <svg
+            id="menu-icon"
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg
+            id="close-icon"
+            class="w-6 h-6 hidden"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2 animate-slide-in">
+      <div class="flex flex-col space-y-3">
+        {
+          isHomePage ? (
+            <>
+              <a
+                href="#home"
+                class="mobile-nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors no-underline font-medium"
+                data-section="home"
+              >
+                홈
+              </a>
+              <a
+                href="#about"
+                class="mobile-nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors no-underline font-medium"
+                data-section="about"
+              >
+                소개
+              </a>
+              <a
+                href="#blog"
+                class="mobile-nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors no-underline font-medium"
+                data-section="blog"
+              >
+                블로그
+              </a>
+              <a
+                href="#contact"
+                class="mobile-nav-link px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors no-underline font-medium"
+                data-section="contact"
+              >
+                연락
+              </a>
+            </>
+          ) : (
+            <>
+              <a
+                href="/"
+                class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors no-underline font-medium"
+              >
+                홈
+              </a>
+              <a
+                href="/blog"
+                class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors no-underline font-medium"
+              >
+                블로그
+              </a>
+              <a
+                href="/about"
+                class="px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors no-underline font-medium"
+              >
+                소개
+              </a>
+            </>
+          )
+        }
+      </div>
     </div>
   </nav>
 </header>
 
 <script>
+  // Theme toggle functionality
   const themeToggle = document.getElementById("theme-toggle");
+  const themeToggleMobile = document.getElementById("theme-toggle-mobile");
   const html = document.documentElement;
 
+  // Initialize theme
   const currentTheme = localStorage.getItem("theme") || "light";
   html.classList.toggle("dark", currentTheme === "dark");
 
-  themeToggle?.addEventListener("click", () => {
+  function toggleTheme() {
     html.classList.toggle("dark");
     const theme = html.classList.contains("dark") ? "dark" : "light";
     localStorage.setItem("theme", theme);
+  }
+
+  themeToggle?.addEventListener("click", toggleTheme);
+  themeToggleMobile?.addEventListener("click", toggleTheme);
+
+  // Mobile menu functionality
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const menuIcon = document.getElementById("menu-icon");
+  const closeIcon = document.getElementById("close-icon");
+
+  mobileMenuButton?.addEventListener("click", () => {
+    const isHidden = mobileMenu?.classList.contains("hidden");
+
+    if (isHidden) {
+      mobileMenu?.classList.remove("hidden");
+      menuIcon?.classList.add("hidden");
+      closeIcon?.classList.remove("hidden");
+    } else {
+      mobileMenu?.classList.add("hidden");
+      menuIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+    }
   });
+
+  // Close mobile menu when clicking anchor links
+  const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
+  mobileNavLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu?.classList.add("hidden");
+      menuIcon?.classList.remove("hidden");
+      closeIcon?.classList.add("hidden");
+    });
+  });
+
+  // Header shadow on scroll
+  let lastScroll = 0;
+  const header = document.getElementById("main-header");
+
+  window.addEventListener("scroll", () => {
+    const currentScroll = window.pageYOffset;
+
+    if (currentScroll > 10) {
+      header?.classList.add("shadow-md");
+    } else {
+      header?.classList.remove("shadow-md");
+    }
+
+    lastScroll = currentScroll;
+  });
+
+  // Scroll spy for active navigation highlighting (homepage only)
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  if (navLinks.length > 0) {
+    const sections = Array.from(navLinks)
+      .map((link) => {
+        const sectionId = link.getAttribute("data-section");
+        return document.getElementById(sectionId);
+      })
+      .filter(Boolean);
+
+    const options = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px",
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.id;
+
+          // Remove active class from all links
+          navLinks.forEach((link) => {
+            link.classList.remove(
+              "text-blue-600",
+              "dark:text-blue-400",
+              "font-bold"
+            );
+            link.classList.add("text-gray-700", "dark:text-gray-300");
+          });
+
+          // Add active class to current section link
+          const activeLink = document.querySelector(
+            `[data-section="${sectionId}"]`
+          );
+          if (activeLink) {
+            activeLink.classList.remove("text-gray-700", "dark:text-gray-300");
+            activeLink.classList.add(
+              "text-blue-600",
+              "dark:text-blue-400",
+              "font-bold"
+            );
+          }
+
+          // Update URL hash without jumping
+          if (history.replaceState) {
+            history.replaceState(null, "", `#${sectionId}`);
+          }
+        }
+      });
+    }, options);
+
+    sections.forEach((section) => {
+      if (section) {
+        observer.observe(section);
+      }
+    });
+  }
 </script>
